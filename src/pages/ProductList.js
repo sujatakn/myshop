@@ -30,8 +30,19 @@ const ProductList = (props) => {
                                <h4 className="card-title" title={p.productName}>{p.productName}</h4>
                                <p className="product-price">{numberFormat(p.productPrice)}/-</p>
                                <p className="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-                                    <Link to={{pathname:"/productDetails",state:p}} className="btn btn-primary btn-sm">View More</Link>
+
                                     <div className="product-actions">
+                                        <div className="a_left">
+                                            <Link to={{pathname:"/productDetails",state:p}} className="btn btn-primary btn-sm">View More</Link>
+                                        </div>
+                                        <div className="a_right">
+                                            <p>
+                                                <span title="Edit Product"><i className="fas fa-edit"></i></span> 
+                                                <span title="Delete Product"><i className="fas fa-trash"></i></span>
+                                                    
+              
+                                            </p>
+                                        </div>
                                           <ul>
                                             <li title="Add to Cart"><i className="fas fa-cart-plus"></i></li>
                                             <li title="Add to Favorites"><i className="fas fa-heart"></i></li>
