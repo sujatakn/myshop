@@ -1,28 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import {Link} from 'react-router-dom';
+import { connect } from 'react-redux';
+import {loadproducts} from '../actions/productActions';
 
+const ProductList = (props) => {
+    const numberFormat = (value) =>
+    new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR'
+    }).format(value);
 
-const ProductList = () => {
-    const[products,setproduct]=useState([]);
+    
     useEffect(()=>{
-        fetch("https://api.mlab.com/api/1/databases/abcd/collections/products?apiKey=ClSj0HxNv3sPJwS3cZOsbZI9exWxVjqz")
-        .then(res=>res.json())
-        .then((data)=>{setproduct(data)})
-    })
+        props.dispatch(loadproducts());
+    },[props])
+    
     return (
+    
         <div className="container">
             <div className="row">
             
                 {
-                    products.length!==0?(
-                        products.map((p)=>{
+                    props.ProductReducer.products?(
+                        props.ProductReducer.products.map((p)=>{
                             return(
-                         <div className="card" style={{"width":"400px"}}>
-                                <img className="card-img-top" src={p.productImage} alt="Card image"/>
+                                <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12" key={p._id.$oid}>
+                                <img className="card-img-top" src={p.productImage} alt={p.productName}/>
                                 <div className="card-body">
-                               <h4 className="card-title">John Doe</h4>
-                                <p className="card-text">Some example text.</p>
-                              <a href="#" className="btn btn-primary">See Profile</a>
-                               </div>
+                               <h4 className="card-title" title={p.productName}>{p.productName}</h4>
+                               <p className="product-price">{numberFormat(p.productPrice)}/-</p>
+                               <p className="card-text">Some example text some example text. John Doe is an architect and engineer</p>
+                                    <Link to={{pathname:"/productDetails",state:p}} className="btn btn-primary btn-sm">View More</Link>
+                                    <div className="product-actions">
+                                          <ul>
+                                            <li title="Add to Cart"><i className="fas fa-cart-plus"></i></li>
+                                            <li title="Add to Favorites"><i className="fas fa-heart"></i></li>
+                                            <li title="View Details"><i className="fas fa-eye"></i></li>
+                                            <li title="Add to Compare"><i className="fas fa-sync-alt"></i></li>
+                                          </ul>
+                                      </div>
+                                      </div>
                           </div>
                                 
                             )
@@ -43,4 +60,4 @@ const ProductList = () => {
     );
 };
 
-export default ProductList;
+export default connect(store=>store) (ProductList);

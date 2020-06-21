@@ -6,9 +6,21 @@ import { BrowserRouter,Route } from 'react-router-dom';
 import Products from './pages/Products';
 import AddProducts from './pages/AddProducts';
 import ProductList from './pages/ProductList';
+import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import Reducer from './reducers/Reducer';
+import thunk from 'redux-thunk';
+const store=new createStore(Reducer,applyMiddleware(thunk))
+
+
+
 
 function App() {
+ 
   return (
+    <Provider store={store}>
     <BrowserRouter>
     <div className="App">
     <Header></Header>
@@ -21,10 +33,17 @@ function App() {
       <Route path='/products/viewproducts'>
         <ProductList></ProductList>
       </Route>
+     <Route path='/productDetails'>
+       <ProductDetails></ProductDetails>
+     </Route>
+     <Route path='/cart'>
+       <Cart></Cart>
+     </Route>
      
     
     </div>
     </BrowserRouter>
+    </Provider>
   );
 }
 
