@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
-import {loadproducts} from '../actions/productActions';
+import {loadproducts,delProduct} from '../actions/productActions';
 
 const ProductList = (props) => {
     const numberFormat = (value) =>
@@ -37,8 +37,10 @@ const ProductList = (props) => {
                                         </div>
                                         <div className="a_right">
                                             <p>
-                                                <span title="Edit Product"><i className="fas fa-edit"></i></span> 
-                                                <span title="Delete Product"><i className="fas fa-trash"></i></span>
+                                                <Link to={{pathname:"/editproduct",state:p}} title="Edit Product"><i className="fas fa-edit"></i></Link>
+                                                <span title="Delete Product" onClick={()=>{
+                                                    props.dispatch(delProduct(p._id.$oid))
+                                                }}><i className="fas fa-trash"></i></span>
                                                     
               
                                             </p>

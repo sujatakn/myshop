@@ -12,6 +12,7 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import Reducer from './reducers/Reducer';
 import thunk from 'redux-thunk';
+import EditProduct from './pages/EditProduct';
 const store=new createStore(Reducer,applyMiddleware(thunk))
 
 
@@ -29,6 +30,9 @@ function App() {
       </Route>
       <Route path='/products/addproducts'>
         <AddProducts></AddProducts>
+      </Route>
+      <Route path='/editproduct'>
+        <EditProduct></EditProduct>
       </Route>
       <Route path='/products/viewproducts'>
         <ProductList></ProductList>
